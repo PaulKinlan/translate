@@ -1,0 +1,21 @@
+application: quicktranlsate
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /styles
+  static_dir: dist/styles
+- url: /scripts
+  static_dir: dist/scripts
+- url: /
+  static_dir: dist
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+
+skip_files:
+-  ^node_modules/?
+-  ^app/? 
