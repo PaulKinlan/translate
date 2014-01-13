@@ -80,6 +80,9 @@ var Transcriber = function() {
        if(this.onStartingCapture) this.onStartingCapture();
        final_transcription = "";
        recognition.onresult = transcriptionReady.bind(this);
+       recognition.onspeechend = this.onEndingCapture();
+       recognition.onaudioend = this.onEndingCapture();
+       recognition.onend = this.onEndingCapture();
        recognition.start();
     }
     else {
@@ -105,9 +108,19 @@ $(document).ready(function() {
     $("#transcription").text(transcript); 
     translator.translate(transcript);
   };
+
+  transcriber.onStartingCapture = function() {
+    $("#transcription").text(""); 
+    $("#translation").text(""); 
+  };
+
+  transcriber.onEndingCapture = function() {
+    $(this).removeClass("listening");
+  };
    
   $("#speak").click(function(e) {
     $(this).toggleClass("listening");
+
     transcriber.toggleVoiceCapture();
   });
 });
