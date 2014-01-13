@@ -19,3 +19,4 @@ libraries:
 skip_files:
 -  ^node_modules/?
 -  ^app/? 
+-  ^test/? 
