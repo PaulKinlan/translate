@@ -92,9 +92,9 @@ var Transcriber = function() {
     capturing = !capturing;
 
     if(capturing == true) {
-       if(this.onStartingCapture) this.onStartingCapture();
        final_transcription = "";
        recognition.onresult = transcriptionReady.bind(this);
+       recognition.onspeechstart = this.onStartingCapture.bind(this);
        recognition.onspeechend = this.onEndingCapture.bind(this);
        recognition.onaudioend = this.onEndingCapture.bind(this);
        recognition.onend = this.onEndingCapture.bind(this);
@@ -111,22 +111,40 @@ $(document).ready(function() {
   var transcriber = new Transcriber();
   var translator = new Translator(window.navigator.language, "es");
 
+  var targetWidth = $("#transcription").width();
+  var targetHeight = $("#transcription").height();
+
   translator.onTranslate = function(text) {
     $("#translation").text(text);
+
+    setTimeout(function() { 
+      var actualHeight = $("#translation")[0].scrollHeight;
+      $("#translation").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
+    }, 0);
   };
 
   transcriber.onTranscription = function(transcript) {
     $("#transcription").text(transcript); 
+    setTimeout(function() { 
+      var actualHeight = $("#transcription")[0].scrollHeight;
+     // $("#transcription").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
+    }, 0);
   };
 
   transcriber.onFinalTranscription = function(transcript) {
     $("#transcription").text(transcript); 
     translator.translate(transcript);
+    setTimeout(function() { 
+      var actualHeight = $("#transcription")[0].scrollHeight;
+      $("#transcription").css({"fontSize": 3 / (actualHeight /targetHeight) + "em"})
+    }, 0);
+
+
   };
 
   transcriber.onStartingCapture = function() {
-    $("#transcription").text(""); 
-    $("#translation").text(""); 
+    $("#transcription").text("").css({"fontSize": "3em"});
+    $("#translation").text("").css({"fontSize": "3em"}); 
   };
 
   transcriber.onEndingCapture = function() {
