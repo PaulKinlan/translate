@@ -5,8 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>translate</title>
+        <title>Quick Translate</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
@@ -17,9 +16,9 @@
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/glyphicons.css">
         <!-- endbuild -->
         <script src="bower_components/modernizr/modernizr.js"></script>
-
     </head>
     <body>
         <!--[if lt IE 10]>
@@ -29,7 +28,11 @@
         <div class="container">
           <p id="transcription">Press Speak then do</p>
           <p id="translation">&nbsp;</p>
-          <p id="controls"><button class="btn btn-lg btn-success" id="speak" href="#"><span class="speak">Speak</span><span class="listening">Listening</span></button></p>
+          <p id="controls">
+             <button class="btn btn-lg btn-success" id="speak" href="#">
+               <span class="glyphicons microphone" style="vertical-align: middle;"></span>
+             </button>
+          </p>
         </div>
 
         <!-- build:js scripts/vendor.js -->

@@ -44,6 +44,12 @@ body {
   text-align: center;
 }
 
+#controls button {
+  width: 5em;
+  height: 5em;
+  border-radius: 50% 50%;
+}
+
 .container p {
   flex: 1;
   width: 100%;
@@ -73,6 +79,18 @@ body {
 
 #speak.listening .speak {
   display: none;
+}
+
+#speak .glyphicons.microphone {
+  padding-left: 0px;
+  vertical-align: baseline;
+}
+
+#speak .glyphicons.microphone:before {
+  position: relative;
+  margin: 0;
+  color: white;
+  font-size: 2em;
 }
 
 #speak .listening {
