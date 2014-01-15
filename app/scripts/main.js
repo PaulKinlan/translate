@@ -152,7 +152,7 @@ $(document).ready(function() {
   };
   
   $("#translation").click(function(e) {
-  //  if(speechSynthesis.speaking == true) return;
+    if(speechSynthesis.speaking == true) return;
     var text = $(this).text();
     // need to stop the recognition whilst speaking.
     transcriber.stop(); 
