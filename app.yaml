@@ -7,6 +7,8 @@ threadsafe: yes
 handlers:
 - url: /styles
   static_dir: dist/styles
+- url: /fonts
+  static_dir: dist/fonts
 - url: /scripts
   static_dir: dist/scripts
 - url: /
