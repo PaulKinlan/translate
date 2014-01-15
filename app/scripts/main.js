@@ -35,6 +35,14 @@ var Translator = function(_inputLocale, _outputLocale) {
   this.setOutputLocale = function(_locale) {
     outputLocale = _locale;
   }.bind(this);
+  
+  this.getInputLocale = function() {
+    return inputLocale;
+  }.bind(this);
+  
+  this.getOutputLocale = function() {
+    return outputLocale;
+  }.bind(this);
 };
 
 var Transcriber = function() {
@@ -59,7 +67,7 @@ var Transcriber = function() {
 
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
-        final_transcript += event.results[i][0].transcript;
+        final_transcript = event.results[i][0].transcript;
         if(this.onFinalTranscription) this.onFinalTranscription(final_transcript);
       } else {
         interim_transcript += event.results[i][0].transcript;
@@ -73,6 +81,13 @@ var Transcriber = function() {
   this.onFinalTranscription = function() {};
   this.onEndingCapture = function() {};
 
+  this.stop = function() {
+    capturing = false;
+    
+    if(this.onEndingCapture) this.onEndingCapture();
+    recognition.stop();
+  };
+ 
   this.toggleVoiceCapture = function() {
     capturing = !capturing;
 
@@ -80,9 +95,9 @@ var Transcriber = function() {
        if(this.onStartingCapture) this.onStartingCapture();
        final_transcription = "";
        recognition.onresult = transcriptionReady.bind(this);
-       recognition.onspeechend = this.onEndingCapture();
-       recognition.onaudioend = this.onEndingCapture();
-       recognition.onend = this.onEndingCapture();
+       recognition.onspeechend = this.onEndingCapture.bind(this);
+       recognition.onaudioend = this.onEndingCapture.bind(this);
+       recognition.onend = this.onEndingCapture.bind(this);
        recognition.start();
     }
     else {
@@ -94,7 +109,7 @@ var Transcriber = function() {
 
 $(document).ready(function() {
   var transcriber = new Transcriber();
-  var translator = new Translator("en", "es");
+  var translator = new Translator(window.navigator.language, "es");
 
   translator.onTranslate = function(text) {
     $("#translation").text(text);
@@ -115,12 +130,33 @@ $(document).ready(function() {
   };
 
   transcriber.onEndingCapture = function() {
-    $(this).removeClass("listening");
+    $("#speak").removeClass("listening");
   };
-   
+  
+  $("#translation").click(function(e) {
+  //  if(speechSynthesis.speaking == true) return;
+    var text = $(this).text();
+    // need to stop the recognition whilst speaking.
+    transcriber.stop(); 
+    var u = new SpeechSynthesisUtterance();
+    u.text = text;
+    u.lang = translator.getOutputLocale();
+    speechSynthesis.speak(u);
+  });
+
+  $("#transcription").click(function(e) {
+    if(speechSynthesis.speaking == true) return;
+    var text = $(this).text();
+    // need to stop the recognition whilst speaking.
+    transcriber.stop();
+    var u = new SpeechSynthesisUtterance();
+    u.text = text;
+    u.lang = translator.getInputLocale();
+    speechSynthesis.speak(u);
+  });
+ 
   $("#speak").click(function(e) {
     $(this).toggleClass("listening");
-
     transcriber.toggleVoiceCapture();
   });
 });
