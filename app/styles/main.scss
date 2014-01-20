@@ -29,6 +29,7 @@ body {
 .container {
   height: 100%;
   display: flex;
+  width: 100% !important;
   margin: 0px;
   padding: 0px;
   flex-direction: column;
@@ -69,6 +70,7 @@ body {
   } 
 
 }
+
 .container p {
   flex: 1;
   width: 100%;
