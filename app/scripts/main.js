@@ -115,16 +115,16 @@ $(document).ready(function() {
   var targetHeight = $("#transcription").height();
 
   translator.onTranslate = function(text) {
-    $("#translation").text(text);
+    $("#translation .output").text(text);
 
     setTimeout(function() { 
       var actualHeight = $("#translation")[0].scrollHeight;
-      $("#translation").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
+      $("#translation .output").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
     }, 0);
   };
 
   transcriber.onTranscription = function(transcript) {
-    $("#transcription").text(transcript); 
+    $("#transcription .text").text(transcript); 
     setTimeout(function() { 
       var actualHeight = $("#transcription")[0].scrollHeight;
      // $("#transcription").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
@@ -132,19 +132,17 @@ $(document).ready(function() {
   };
 
   transcriber.onFinalTranscription = function(transcript) {
-    $("#transcription").text(transcript); 
+    $("#transcription .output").text(transcript); 
     translator.translate(transcript);
     setTimeout(function() { 
       var actualHeight = $("#transcription")[0].scrollHeight;
-      $("#transcription").css({"fontSize": 3 / (actualHeight /targetHeight) + "em"})
+      $("#transcription .output").css({"fontSize": 3 / (actualHeight /targetHeight) + "em"})
     }, 0);
-
-
   };
 
   transcriber.onStartingCapture = function() {
-    $("#transcription").text("").css({"fontSize": "3em"});
-    $("#translation").text("").css({"fontSize": "3em"}); 
+    $("#transcription .output").text("").css({"fontSize": "3em"});
+    $("#translation .output").text("").css({"fontSize": "3em"}); 
   };
 
   transcriber.onEndingCapture = function() {
@@ -153,7 +151,7 @@ $(document).ready(function() {
   
   $("#translation").click(function(e) {
     if(speechSynthesis.speaking == true) return;
-    var text = $(this).text();
+    var text = $(".output", this).text();
     // need to stop the recognition whilst speaking.
     transcriber.stop(); 
     var u = new SpeechSynthesisUtterance();
@@ -164,7 +162,7 @@ $(document).ready(function() {
 
   $("#transcription").click(function(e) {
     if(speechSynthesis.speaking == true) return;
-    var text = $(this).text();
+    var text = $(".output", this).text();
     // need to stop the recognition whilst speaking.
     transcriber.stop();
     var u = new SpeechSynthesisUtterance();
@@ -172,7 +170,15 @@ $(document).ready(function() {
     u.lang = translator.getInputLocale();
     speechSynthesis.speak(u);
   });
+
+  $("#input").click(function(e){
+    translator.setInputLocale("");
+  });
  
+  $("#output").click(function(e){
+    translator.setOutputLocale("");
+  });
+
   $("#speak").click(function(e) {
     $(this).toggleClass("listening");
     transcriber.toggleVoiceCapture();

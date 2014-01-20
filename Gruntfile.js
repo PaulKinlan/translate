@@ -24,7 +24,22 @@ module.exports = function (grunt) {
             app: 'app',
             dist: 'dist'
         },
-
+   
+        uncss: {
+            dist: {
+                files: {
+                   'dist/styles/main.css': ['app/index.html']
+                }
+            }
+        },
+      
+        compare_size: {
+            files: [
+                "app/styles/**",
+                "dist/styles/**"
+            ]
+        },
+    
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             js: {
@@ -398,7 +413,9 @@ module.exports = function (grunt) {
         'modernizr',
         'rev',
         'usemin',
-        'htmlmin'
+        'htmlmin',
+        'uncss:dist',
+        'compare_size'
     ]);
 
     grunt.registerTask('default', [

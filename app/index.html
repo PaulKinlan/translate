@@ -26,19 +26,20 @@
         <![endif]-->
 
         <div class="container">
-          <p id="transcription">Press Speak then do</p>
-          <p id="translation">&nbsp;</p>
+          <p id="transcription"><span class="glyphicons volume_up"></span><span class="output"></span></p>
+          <p id="translation"><span class="glyphicons volume_up"></span> <span class="output"></span></p>
           <p id="controls">
-             <button class="btn btn-lg btn-success" id="speak" href="#">
+             <button class="btn btn-success selector" id="input">English</button>
+             <button class="btn btn-lg btn-success" id="speak">
                <span class="glyphicons microphone" style="vertical-align: middle;"></span>
              </button>
+             <button class="btn btn-success selector" id="output">Spanish</button>
           </p>
         </div>
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/jquery.js"></script>
-        <script src="bower_components/fittext/fittext.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -58,17 +59,9 @@
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/sass-bootstrap/js/affix.js"></script>
-        <script src="bower_components/sass-bootstrap/js/alert.js"></script>
-        <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
         <script src="bower_components/sass-bootstrap/js/tooltip.js"></script>
         <script src="bower_components/sass-bootstrap/js/modal.js"></script>
         <script src="bower_components/sass-bootstrap/js/transition.js"></script>
-        <script src="bower_components/sass-bootstrap/js/button.js"></script>
-        <script src="bower_components/sass-bootstrap/js/popover.js"></script>
-        <script src="bower_components/sass-bootstrap/js/carousel.js"></script>
-        <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
-        <script src="bower_components/sass-bootstrap/js/collapse.js"></script>
-        <script src="bower_components/sass-bootstrap/js/tab.js"></script>
         <!-- endbuild -->
 </body>
 </html>
