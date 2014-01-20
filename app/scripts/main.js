@@ -115,30 +115,25 @@ $(document).ready(function() {
   var targetHeight = $("#transcription").height();
 
   translator.onTranslate = function(text) {
-    $("#translation").addClass("ready");
     $("#translation .output").text(text);
-
     setTimeout(function() { 
       var actualHeight = $("#translation")[0].scrollHeight;
       $("#translation .output").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
+      $("#translation").addClass("ready");
     }, 0);
   };
 
   transcriber.onTranscription = function(transcript) {
     $("#transcription .text").text(transcript); 
-    setTimeout(function() { 
-      var actualHeight = $("#transcription")[0].scrollHeight;
-     // $("#transcription").css({"fontSize": 3 * (1/ (actualHeight / targetHeight)) + "em"})
-    }, 0);
   };
 
   transcriber.onFinalTranscription = function(transcript) {
-    $("#transcription").addClass("ready");
     $("#transcription .output").text(transcript); 
     translator.translate(transcript);
     setTimeout(function() { 
       var actualHeight = $("#transcription")[0].scrollHeight;
       $("#transcription .output").css({"fontSize": 3 / (actualHeight /targetHeight) + "em"})
+      $("#transcription").addClass("ready");
     }, 0);
   };
 
@@ -183,6 +178,8 @@ $(document).ready(function() {
 
   $("#speak").click(function(e) {
     $(this).toggleClass("listening");
+    $("#translation").removeClass("ready");
+    $("#transcription").removeClass("ready");
     transcriber.toggleVoiceCapture();
   });
 });
