@@ -102,6 +102,11 @@ var Transcriber = function() {
     }
     else {
        if(this.onEndingCapture) this.onEndingCapture();
+       recognition.onresult = null;
+       recognition.onspeechstart = null;
+       recognition.onspeechend = null;
+       recognition.onaudioend = null;
+       recognition.onend = null;
        recognition.stop();
     }
   };
@@ -177,9 +182,12 @@ $(document).ready(function() {
   });
 
   $("#speak").click(function(e) {
+    if($(this).hasClass("listening") == false) {
+      $("#translation").removeClass("ready");
+      $("#transcription").removeClass("ready");
+    }
+
     $(this).toggleClass("listening");
-    $("#translation").removeClass("ready");
-    $("#transcription").removeClass("ready");
     transcriber.toggleVoiceCapture();
   });
 });
