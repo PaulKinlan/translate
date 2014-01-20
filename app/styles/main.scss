@@ -39,6 +39,7 @@ body {
   flex-direction: column;
   align-items: center;
   align-content: stretch;
+  -webkit-perspective: 800;
 }
 
 #controls {
@@ -70,15 +71,20 @@ body {
   color: #224004;
   overflow: auto;
   min-height: 30%;
+  transform: rotateY(-90deg);
+  transform-origin: top left; 
+  transition: 1s transform ease-in-out;
 }
 
 #transcription .glyphicons, #translation .glyphicons {
   padding-left: 25px;
+  position: static !important;
   float: right;
 }
 
 #transcription .glyphicons:before, #translation .glyphicons:before {
   color: white;
+  position: initial;
   opacity: 0.3;
 }
 
@@ -88,6 +94,14 @@ body {
   min-height: 30%;
   color: white;
   overflow: auto;
+  transform: rotateY(-90deg);
+  transform-origin: top left; 
+  transition: 1s transform ease-in-out;
+  
+}
+
+#translation.ready, #transcription.ready {
+  transform: rotateY(0deg)
 }
 
 #speak.listening {

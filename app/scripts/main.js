@@ -115,6 +115,7 @@ $(document).ready(function() {
   var targetHeight = $("#transcription").height();
 
   translator.onTranslate = function(text) {
+    $("#translation").addClass("ready");
     $("#translation .output").text(text);
 
     setTimeout(function() { 
@@ -132,6 +133,7 @@ $(document).ready(function() {
   };
 
   transcriber.onFinalTranscription = function(transcript) {
+    $("#transcription").addClass("ready");
     $("#transcription .output").text(transcript); 
     translator.translate(transcript);
     setTimeout(function() { 
