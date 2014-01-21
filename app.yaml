@@ -9,12 +9,20 @@ default_expiration: "1d"
 handlers:
 - url: /styles
   static_dir: dist/styles
+  secure: always
 - url: /fonts
   static_dir: dist/fonts
+  secure: always
 - url: /scripts
   static_dir: dist/scripts
+  secure: always
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
 - url: /
   static_dir: dist
+  secure: always
 
 libraries:
 - name: webapp2
